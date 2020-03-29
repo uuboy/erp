@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Table;
+use App\Models\Col;
+use App\Models\Row;
+use App\Models\Item;
 
-class TableController extends Controller
+class RowController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +17,7 @@ class TableController extends Controller
      */
     public function index()
     {
-        $tables = Table::paginate(10);
-        return view('tables.index',compact('tables'));
+        //
     }
 
     /**
@@ -23,9 +25,9 @@ class TableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Table $table)
+    public function create()
     {
-        return view('tables.create_and_edit', compact('table'));
+        //
     }
 
     /**
@@ -36,8 +38,34 @@ class TableController extends Controller
      */
     public function store(Table $table, Request $request)
     {
-        $table->fill($request->all());
-        $table->save();
+        $row = Row::create();
+        $row->table()->associate($table);
+        $row->save();
+        $cols = $table->cols;
+        foreach ($cols as $col) {
+            $data = [];
+            $data['table_id'] = $table->id;
+            $data['col_id'] = $col->id;
+            $data['row_id'] = $row->id;
+            switch ($col->data_sort) {
+                case 1:
+                    $data['int_val'] = $request['col_'.$col->id];
+                    break;
+                case 2:
+                    $data['float_val'] = $request['col_'.$col->id];
+                    break;
+                case 3:
+                    $data['text_val'] = $request['col_'.$col->id];
+                    break;
+                case 4:
+                    $data['date_val'] = $request['col_'.$col->id];
+                    break;
+                default:
+                    $data['text_val'] = $request['col_'.$col->id];
+                    break;
+            }
+            $item = Item::create($data);
+        }
     }
 
     /**
@@ -46,10 +74,9 @@ class TableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Table $table)
+    public function show($id)
     {
-        $cols = $table->cols;
-        return view('tables.show', compact('table', 'cols'));
+        //
     }
 
     /**
@@ -58,9 +85,9 @@ class TableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Table $table)
+    public function edit($id)
     {
-        return view('tables.create_and_edit', compact('table'));
+        //
     }
 
     /**
@@ -70,9 +97,9 @@ class TableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Table $table, Request $request)
+    public function update(Request $request, $id)
     {
-        $table->update($request->all());
+        //
     }
 
     /**

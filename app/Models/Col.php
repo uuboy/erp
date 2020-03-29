@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Col extends Model
 {
-    $fillable = ['name','tag','table_id'];
+    protected $fillable = ['name','tag', 'data_sort'];
 
-    function table()
+    public function table()
     {
         return $this->belongsTo(Table::class);
     }

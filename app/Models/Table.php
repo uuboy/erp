@@ -6,24 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Table extends Model
 {
-    $fillable = ['name','tag'];
+    protected $fillable = ['name','tag'];
 
-    function cols()
+    public function cols()
     {
         return $this->hasMany(Col::class);
     }
 
-    function rows()
+    public function rows()
     {
         return $this->hasMany(Row::class);
     }
 
-    function items()
+    public function items()
     {
         return $this->hasMany(Item::class);
     }
 
-    function table()
+    public function table()
     {
         return $this->belongsTo(Table::class);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Table;
 use App\Models\Col;
 use Illuminate\Http\Request;
 
@@ -22,9 +23,9 @@ class ColController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Table $table, Col $col)
     {
-        //
+        return view('cols.create_and_edit',compact('table', 'col'));
     }
 
     /**
@@ -33,9 +34,11 @@ class ColController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Table $table, Col $col, Request $request)
     {
-        //
+        $col->fill($request->all());
+        $col->table()->associate($table);
+        $col->save();
     }
 
     /**
@@ -55,9 +58,9 @@ class ColController extends Controller
      * @param  \App\Col  $col
      * @return \Illuminate\Http\Response
      */
-    public function edit(Col $col)
+    public function edit(Table $table, Col $col)
     {
-        //
+         return view('cols.create_and_edit',compact('table', 'col'));
     }
 
     /**
@@ -67,9 +70,9 @@ class ColController extends Controller
      * @param  \App\Col  $col
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Col $col)
+    public function update(Table $table, Col $col, Request $request)
     {
-        //
+        $col->update($request->all());
     }
 
     /**

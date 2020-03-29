@@ -14,3 +14,11 @@
 Route::get('/', 'PagesController@root')->name('root');
 
 Route::resource('tables','TableController');
+
+Route::get('tables/{table}/cols/create', 'ColController@create')->name('cols.create');
+Route::get('tables/{table}/cols/{col}', 'ColController@edit')->name('cols.edit');
+Route::put('tables/{table}/cols/{col}', 'ColController@update')->name('cols.update');
+Route::post('tables/{table}/cols', 'ColController@store')->name('cols.store');
+
+
+Route::post('tables/{table}/rows', 'RowController@store')->name('rows.store');
