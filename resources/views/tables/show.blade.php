@@ -4,9 +4,8 @@
 
 @section('content')
   <div class="row">
-    <div class="col-md-10 col-lg-10 offset-md-1 offset-lg-1">
+    <div class="col-md-9 col-lg-9">
       @if($cols->count())
-      <form action="{{ route('rows.store', $table->id) }}" method="POST" accept-charset="UTF-8">
       @csrf
         <table class="table table-bordered">
           <thead>
@@ -18,22 +17,43 @@
             </tr>
           </thead>
           <tbody>
+            @foreach($rows as $row)
             <tr>
               @foreach($cols as $col)
               <td>
-                <input type="text" class="form-control" name="col_{{ $col->id }}" id="col_{{ $col->id }}">
+                @switch($col->data_sort)
+                  @case(1)
+                    {{ $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->int_val }}
+                    @break
+                  @case(2)
+                    {{ $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->float_val }}
+                    @break
+                  @case(3)
+                    {{ $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->text_val }}
+                    @break
+                  @case(4)
+                    {{ $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->date_val }}
+                    @break
+                  @default
+                    {{ $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $$col->id; })->first()->text_val }}
+                @endswitch
               </td>
               @endforeach
               <td>
-                <button class="btn btn-primary btn-sm fa fa-save" type="submit"></button>
+                <a href="#" style="color: inherit;">
+                  <i class="fa fa-edit"></i>
+                </a>
               </td>
             </tr>
+            @endforeach
           </tbody>
         </table>
-      </form>
       @else
         <h3 class="text-xs-center alert alert-info">Empty!</h3>
       @endif
+    </div>
+    <div class="col-md-3 col-lg-3">
+      @include('tables._sidebar')
     </div>
   </div>
 @stop

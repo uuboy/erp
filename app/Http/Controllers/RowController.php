@@ -25,9 +25,10 @@ class RowController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Table $table, Row $row)
     {
-        //
+        $cols = $table->cols;
+        return view('rows.create_and_edit', compact('table', 'row', 'cols'));
     }
 
     /**
@@ -49,19 +50,19 @@ class RowController extends Controller
             $data['row_id'] = $row->id;
             switch ($col->data_sort) {
                 case 1:
-                    $data['int_val'] = $request['col_'.$col->id];
+                    $data['int_val'] = (int) $request['col_'.$col->id];
                     break;
                 case 2:
-                    $data['float_val'] = $request['col_'.$col->id];
+                    $data['float_val'] = (float) $request['col_'.$col->id];
                     break;
                 case 3:
-                    $data['text_val'] = $request['col_'.$col->id];
+                    $data['text_val'] = (string) $request['col_'.$col->id];
                     break;
                 case 4:
-                    $data['date_val'] = $request['col_'.$col->id];
+                    $data['date_val'] = date("Y-m-d",strtotime($request['col_'.$col->id]));
                     break;
                 default:
-                    $data['text_val'] = $request['col_'.$col->id];
+                    $data['text_val'] = (string) $request['col_'.$col->id];
                     break;
             }
             $item = Item::create($data);

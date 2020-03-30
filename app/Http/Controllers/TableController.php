@@ -49,7 +49,8 @@ class TableController extends Controller
     public function show(Table $table)
     {
         $cols = $table->cols;
-        return view('tables.show', compact('table', 'cols'));
+        $rows = $table->rows;
+        return view('tables.show', compact('table', 'cols','rows'));
     }
 
     /**

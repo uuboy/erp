@@ -13,4 +13,9 @@ class Col extends Model
         return $this->belongsTo(Table::class);
     }
 
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
+
 }
