@@ -32,7 +32,11 @@
                       <label for="{{ 'col_'.$col->id }}">
                         {{ $col->name }}:整数型
                       </label>
-                      <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->int_val) }}">
+                      @if($row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->isNotEmpty())
+                        <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->int_val) }}">
+                      @else
+                        <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="">
+                      @endif
                     </div>
                    @break
                   @case(2)
@@ -40,7 +44,11 @@
                       <label for="{{ 'col_'.$col->id }}">
                         {{ $col->name }}:浮点型
                       </label>
-                      <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->float_val) }}">
+                      @if($row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->isNotEmpty())
+                        <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->float_val) }}">
+                      @else
+                        <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="">
+                      @endif
                     </div>
                    @break
                   @case(3)
@@ -48,7 +56,11 @@
                       <label for="{{ 'col_'.$col->id }}">
                         {{ $col->name }}:文本型
                       </label>
-                      <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->text_val) }}">
+                      @if($row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->isNotEmpty())
+                        <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->text_val) }}">
+                      @else
+                        <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="">
+                      @endif
                     </div>
                    @break
                   @case(4)
@@ -56,7 +68,11 @@
                       <label for="{{ 'col_'.$col->id }}">
                         {{ $col->name }}:日期型
                       </label>
-                      <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->date_val) }}">
+                      @if($row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->isNotEmpty())
+                        <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->date_val) }}">
+                      @else
+                        <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="">
+                      @endif
                     </div>
                    @break
                 @endswitch
