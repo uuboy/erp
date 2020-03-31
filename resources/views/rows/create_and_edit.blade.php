@@ -26,26 +26,41 @@
               @csrf
               <div class="form-group">
               @foreach($cols as $col)
-                <div class="form-group">
-                  <label for="{{ 'col_'.$col->id }}">
-                    {{ $col->name }}
-                    @switch($col->data_sort)
-                    @case(1)
-                        （整数型）
-                     @break
-                    @case(2)
-                        （浮点数型）
-                     @break
-                    @case(3)
-                        （文本型）
-                     @break
-                    @case(4)
-                        （日期型）
-                     @break
-                     @endswitch
-                  </label>
-                  <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="" required>
-                </div>
+                @switch($col->data_sort)
+                  @case(1)
+                    <div class="form-group">
+                      <label for="{{ 'col_'.$col->id }}">
+                        {{ $col->name }}:整数型
+                      </label>
+                      <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->int_val) }}">
+                    </div>
+                   @break
+                  @case(2)
+                    <div class="form-group">
+                      <label for="{{ 'col_'.$col->id }}">
+                        {{ $col->name }}:浮点型
+                      </label>
+                      <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->float_val) }}">
+                    </div>
+                   @break
+                  @case(3)
+                    <div class="form-group">
+                      <label for="{{ 'col_'.$col->id }}">
+                        {{ $col->name }}:文本型
+                      </label>
+                      <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->text_val) }}">
+                    </div>
+                   @break
+                  @case(4)
+                    <div class="form-group">
+                      <label for="{{ 'col_'.$col->id }}">
+                        {{ $col->name }}:日期型
+                      </label>
+                      <input type="text" class="form-control" name="{{ 'col_'.$col->id }}" id="{{ 'col_'.$col->id }}" value="{{ old($i++, $row->items->filter(function ($value, $key) use($col) { return $value->col_id == $col->id; })->first()->date_val) }}">
+                    </div>
+                   @break
+                @endswitch
+
               @endforeach
               </div>
               <div class="form-group text-center mt-4">

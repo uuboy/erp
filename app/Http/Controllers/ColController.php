@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Table;
 use App\Models\Col;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class ColController extends Controller
@@ -25,7 +26,8 @@ class ColController extends Controller
      */
     public function create(Table $table, Col $col)
     {
-        return view('cols.create_and_edit',compact('table', 'col'));
+        return view('cols.create_and_edit', compact('table', 'col'));
+
     }
 
     /**
@@ -39,6 +41,18 @@ class ColController extends Controller
         $col->fill($request->all());
         $col->table()->associate($table);
         $col->save();
+        if($table->rows->isNotEmpty())
+        {
+            foreach ($table->rows as $row) {
+                $data = [];
+                $data['table_id'] = $table->id;
+                $data['col_id'] = $col->id;
+                $data['row_id'] = $row->id;
+                Item::create($data);
+            }
+        }
+
+        return redirect()->route('tables.show', $table->id)->with('success', '插入列成功');
     }
 
     /**

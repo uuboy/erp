@@ -62,11 +62,11 @@ class RowController extends Controller
                     $data['date_val'] = date("Y-m-d",strtotime($request['col_'.$col->id]));
                     break;
                 default:
-                    $data['text_val'] = (string) $request['col_'.$col->id];
                     break;
             }
             $item = Item::create($data);
         }
+        return redirect()->route('tables.show', $table->id)->with('success', '插入行成功');
     }
 
     /**
@@ -86,9 +86,12 @@ class RowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Table $table, Row $row)
     {
-        //
+        $cols = $table->cols;
+        $items = $row->items;
+        $i = 1;
+        return view('rows.create_and_edit', compact('table', 'row', 'cols' ,'items' ,'i'));
     }
 
     /**
@@ -98,9 +101,31 @@ class RowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Table $table, Row $row, Request $request)
     {
-        //
+        $cols = $table->cols;
+        $items = $row->items;
+        foreach ($items as $item) {
+            $data = [];
+            switch ($item->col->data_sort) {
+                case 1:
+                    $data['int_val'] = (int) $request['col_'.$item->col->id];
+                    break;
+                case 2:
+                    $data['float_val'] = (float) $request['col_'.$item->col->id];
+                    break;
+                case 3:
+                    $data['text_val'] = (string) $request['col_'.$item->col->id];
+                    break;
+                case 4:
+                    $data['date_val'] = date("Y-m-d",strtotime($request['col_'.$item->col->id]));
+                    break;
+                default:
+                    break;
+            }
+            $item->update($data);
+        }
+         return redirect()->route('tables.show', $table->id)->with('success', '更新行成功');
     }
 
     /**

@@ -21,4 +21,6 @@ Route::put('tables/{table}/cols/{col}', 'ColController@update')->name('cols.upda
 Route::post('tables/{table}/cols', 'ColController@store')->name('cols.store');
 
 Route::get('tables/{table}/rows/create', 'RowController@create')->name('rows.create');
+Route::get('tables/{table}/rows/{row}', 'RowController@edit')->name('rows.edit');
+Route::put('tables/{table}/rows/{row}', 'RowController@update')->name('rows.update');
 Route::post('tables/{table}/rows', 'RowController@store')->name('rows.store');

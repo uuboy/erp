@@ -19,7 +19,7 @@ class CreateItemsTable extends Migration
             $table->bigInteger('col_id')->unsigned()->default(0);
             $table->bigInteger('row_id')->unsigned()->default(0);
             $table->bigInteger('int_val')->nullable();
-            $table->float('float_val')->nullable();
+            $table->double('float_val')->nullable();
             $table->text('text_val')->nullable();
             $table->date('date_val')->nullable();
             $table->timestamps();

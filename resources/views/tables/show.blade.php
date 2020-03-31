@@ -40,7 +40,7 @@
               </td>
               @endforeach
               <td>
-                <a href="#" style="color: inherit;">
+                <a href="{{ route('rows.edit', [$table->id,$row->id]) }}" style="color: inherit;">
                   <i class="fa fa-edit"></i>
                 </a>
               </td>

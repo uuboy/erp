@@ -12,10 +12,10 @@ class TableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Table $table)
     {
         $tables = Table::paginate(10);
-        return view('tables.index',compact('tables'));
+        return view('tables.index',compact('tables','table'));
     }
 
     /**
@@ -38,6 +38,8 @@ class TableController extends Controller
     {
         $table->fill($request->all());
         $table->save();
+
+        return redirect()->route('tables.show', $table->id)->with('success', '表格创建成功');
     }
 
     /**
